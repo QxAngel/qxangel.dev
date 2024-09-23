@@ -4,22 +4,22 @@ document.addEventListener('DOMContentLoaded', function() {
   const select = document.createElement('select');
   select.id = 'enlaces';
   select.style.width = '100%';
-  select.style.padding = '10px';
-  select.style.fontSize = '16px';
+  select.style.padding = '20px';
+  select.style.fontSize = '20px';
   select.style.textAlign = 'center';
   select.onchange = function() { abrirEnlace(this); };
 
   const options = [
     { value: '', text: 'add repo', selected: true },
-    { value: 'javascript:void(0);', text: 'Copy Page URL', onclick: 'copiarUrl()' },
+    { value: 'javascript:void(0);', text: 'Copy URL', onclick: 'copiarUrl()' },
     { value: 'scarlet://repo=https://qxangel.github.io/scarlet.json', text: 'Scarlet' },
     { value: 'esign://addsource?url=https://qxangel.github.io/repo.json', text: 'ESign' },
     { value: 'altstore://source?url=https://qxangel.github.io/repo.json', text: 'Altstore' },
     { value: '', text: '--------------------', disabled: true },
     { value: '', text: 'Support Me', disabled: true },
-    { value: 'https://example.com/donate', text: 'Donate' },
-    { value: 'https://example.com/patreon', text: 'Patreon' },
-    { value: 'https://example.com/support', text: 'Support Page' },
+    { value: 'https://www.paypal.me/onlykex1', text: 'Donate', onclick: 'copiarUrl()' }, // Cambiado para copiar URL
+    { value: 'https://www.instagram.com/6ky_l/', text: 'Instagram' },
+    { value: 'https://github.com/QxAngel', text: 'Github' },
   ];
 
   options.forEach(option => {
@@ -38,15 +38,15 @@ function abrirEnlace(select) {
   const url = select.value;
   if (url && url !== "javascript:void(0);") {
     redirectToApp(url);
-    // No reiniciar la selección, deja que el usuario elija nuevamente
+    // Restablecer la selección a "add repo" para permitir una nueva selección
+    select.selectedIndex = 0; 
   }
 }
 
 function copiarUrl() {
-  const url = window.location.href; // Obtiene la URL de la página
+  const url = "https://qxangel.github.io/"; // URL que deseas copiar
   navigator.clipboard.writeText(url).then(() => {
     alert('URL copiada: ' + url);
-    // No se cambia el texto del dropdown al copiar la URL
   }).catch(err => {
     console.error('Error al copiar la URL: ', err);
     alert('No se pudo copiar la URL, por favor inténtalo manualmente.');
@@ -56,7 +56,6 @@ function copiarUrl() {
 function redirectToApp(link) {
   window.location.href = link; // Redirige a la URL proporcionada
 }
-
 
 function createCard(imageSrc, version, downloadURL, localizedDescription, appName, versionDate) {
   var card = document.createElement("div");

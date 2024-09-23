@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function abrirEnlace(select) {
   const url = select.value;
-  if (url && url !== "javascript:void(0);") {
+  if (url && url !== "javascript:void(0);" && !select.options[select.selectedIndex].disabled) {
     redirectToApp(url); // Usar la función redirectToApp
     select.selectedIndex = 0; // Vuelve a seleccionar "add repo"
   }
@@ -56,7 +56,6 @@ function copiarUrl() {
 function redirectToApp(link) {
   window.location.href = link; // Redirige a la URL proporcionada
 }
-
 
 function createCard(imageSrc, version, downloadURL, localizedDescription, appName, versionDate) {
   var card = document.createElement("div");

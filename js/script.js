@@ -28,9 +28,6 @@ document.addEventListener('DOMContentLoaded', function() {
     opt.text = option.text;
     if (option.selected) opt.selected = true;
     if (option.disabled) opt.disabled = true;
-    if (option.onclick) {
-      opt.onclick = function() { copiarUrl(); };
-    }
     select.appendChild(opt);
   });
 
@@ -39,9 +36,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function abrirEnlace(select) {
   const url = select.value;
-  if (url && url !== "javascript:void(0);" && !select.options[select.selectedIndex].disabled) {
-    redirectToApp(url); // Usar la función redirectToApp
-    select.selectedIndex = 0; // Vuelve a seleccionar "add repo"
+  if (url && url !== "javascript:void(0);") {
+    redirectToApp(url);
+    // No reiniciar la selección, deja que el usuario elija nuevamente
   }
 }
 
@@ -49,13 +46,17 @@ function copiarUrl() {
   const url = window.location.href; // Obtiene la URL de la página
   navigator.clipboard.writeText(url).then(() => {
     alert('URL copiada: ' + url);
-    document.getElementById('enlaces').selectedIndex = 0; // Regresa a "add repo"
+    // No se cambia el texto del dropdown al copiar la URL
+  }).catch(err => {
+    console.error('Error al copiar la URL: ', err);
+    alert('No se pudo copiar la URL, por favor inténtalo manualmente.');
   });
 }
 
 function redirectToApp(link) {
   window.location.href = link; // Redirige a la URL proporcionada
 }
+
 
 function createCard(imageSrc, version, downloadURL, localizedDescription, appName, versionDate) {
   var card = document.createElement("div");
